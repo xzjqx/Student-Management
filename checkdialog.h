@@ -15,6 +15,11 @@ public:
     explicit checkDialog(QWidget *parent = 0);
     ~checkDialog();
 
+private slots:
+    void on_dialogCancelButton_clicked();
+
+    void on_dialogCheckButton_clicked();
+
 private:
     Ui::checkDialog *ui;
 };

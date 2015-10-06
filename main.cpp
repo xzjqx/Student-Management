@@ -9,6 +9,7 @@ STU_CLASS STU;
 int main(int argc, char *argv[])
 {
     STU.init_database();
+    //qDebug() << STU.isConnect;
     QApplication a(argc, argv);
 
     QSplashScreen *splash = new QSplashScreen;
@@ -50,12 +51,12 @@ void STU_CLASS::init_database() {
     db.setUserName("root");
     db.setPassword("");
     if (!db.open()) {
-        isConnect = 0;
+        STU.isConnect = 0;
         //QMessageBox::warning(log, tr("Warning!!!"), tr("连接数据库出现问题！"));
         //this->close();
     }
     else {
-        isConnect = 1;
+        STU.isConnect = 1;
         //QMessageBox::warning(adminLoginDialog, tr("恭喜你"), tr("成功连接上数据库！"));
         //this->close();
     }

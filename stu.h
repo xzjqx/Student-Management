@@ -16,6 +16,9 @@ public:
     int isLogin;
     int index;
     QString id;
+    QString room[4][4];
+    QString s[4];
+
     void init_database();
 
 };

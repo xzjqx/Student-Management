@@ -12,6 +12,7 @@ StudentManagement::StudentManagement(QWidget *parent) :
     this->setMaximumSize(546,392);
     this->setMinimumSize(546,392);
     ui->infoTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+    ui->infoTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     QSqlQuery query("SELECT * FROM student");
     query.exec("SELECT * FROM student");

@@ -55,8 +55,8 @@ void dataEntryDialog::on_dataSubmitButton_clicked()
 
     QSqlQuery query("SELECT * FROM student");
     while( query.next() ) {
-        if(dataId == query.value(index).toString()) {
-            STU.id = query.value(index).toString();
+        if(dataId == query.value(0).toString()) {
+            STU.id = query.value(0).toString();
             haveStuInfo = 1;
             break;
         }

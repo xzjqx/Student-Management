@@ -48,7 +48,27 @@ void gradeEntryDialog::on_gradeSubmitButton_clicked()
         double zonghe = 0, xuefen;
         query.prepare("SELECT * FROM class where id = :i");
         query.bindValue(":i", classId);
+        query.exec();
+        //qDebug() << xuefen;
+        query.next();
         xuefen = query.value(2).toDouble();
+        //qDebug() << xuefen;
+        if( shiyan.toDouble() == -1 )
+            zonghe = pingshi.toDouble()*0.3 + juanmian.toDouble()*0.7;
+        else
+            zonghe = pingshi.toDouble()*0.15 + shiyan.toDouble()*0.15 + juanmian.toDouble()*0.7;
+        if(zonghe >= 90)
+            xuefen = 1.0*xuefen;
+        else if(zonghe >= 80)
+            xuefen *= 0.8;
+        else if(zonghe >= 70)
+            xuefen *= 0.75;
+        else if(zonghe >= 60)
+            xuefen *= 0.6;
+        else
+            xuefen = 0;
+        //qDebug() << xuefen;
+
         query.prepare("INSERT INTO `studentmanagement`.`grades` (`stuId`,`classId`,`pingshichengji`,`shiyanchengji`,`juanmianchengji`,`zonghechengji`,`shidexuefen`) VALUES (:id,:id2,:p,:s,:j,:z,:x);");
         query.bindValue(":id", STU.id);
         query.bindValue(":id2", classId);
@@ -59,5 +79,6 @@ void gradeEntryDialog::on_gradeSubmitButton_clicked()
         query.bindValue(":x", xuefen);
         query.exec();
         this->close();
+        QMessageBox::warning(this, tr("录入成功"), tr("该生成绩已录入后台数据库"));
     }
 }
