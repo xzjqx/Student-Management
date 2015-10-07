@@ -69,8 +69,15 @@ void dataEntryDialog::on_dataSubmitButton_clicked()
         query.bindValue(":room", dataRoom);
         query.bindValue(":sex", dataSex);
         query.exec();
+        this->close();
+        QMessageBox::warning(this, tr("录入成功"), tr("该生信息已在后台数据库中"));
     }
-    this->close();
-    promptDialog *dia = new promptDialog;
-    dia->show();
+    else {
+        ui->dataIdLineEdit->setText("");
+        ui->dataNameLineEdit->setText("");
+        ui->dataRoomLineEdit->setText("");
+        ui->dataSexLineEdit->setText("");
+        QMessageBox::warning(this, tr("录入失败"), tr("数据库中已有该学生信息，无需再次录入"));
+    }
+
 }

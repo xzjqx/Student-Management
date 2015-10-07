@@ -42,13 +42,29 @@ void classEntryDialog::on_classSubmitButton_clicked()
         return;
     }
 
+    int haveClassInfo = 0;
+    QSqlQuery query("SELECT * FROM class");
+    while( query.next() ) {
+        if(classId == query.value(0).toString()) {
+            //STU.id = query.value(0).toString();
+            haveClassInfo = 1;
+            break;
+        }
+    }
 
-    QSqlQuery query;
-    query.prepare("INSERT INTO `class`(`id`, `name`, `credit`) VALUES (:cid,:cname,:x)");
-    query.bindValue(":cis", classId);
-    query.bindValue(":cname", className);
-    query.bindValue(":x", classXuefen);
-    query.exec();
-    this->close();
-    QMessageBox::warning(this, tr("录入成功"), tr("该课程信息已录入后台数据库"));
+    if(!haveClassInfo) {
+        query.prepare("INSERT INTO `class`(`id`, `name`, `credit`) VALUES (:cid,:cname,:x)");
+        query.bindValue(":cid", classId);
+        query.bindValue(":cname", className);
+        query.bindValue(":x", classXuefen.toDouble());
+        query.exec();
+        this->close();
+        QMessageBox::warning(this, tr("录入成功"), tr("该课程信息已录入后台数据库"));
+    }
+    else {
+        ui->classIdLineEdit->setText("");
+        ui->classNameLineEdit->setText("");
+        ui->classXuefenLineEdit->setText("");
+        QMessageBox::warning(this, tr("录入失败"), tr("数据库中已有该课程信息，无需再次录入"));
+    }
 }

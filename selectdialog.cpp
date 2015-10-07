@@ -2,6 +2,7 @@
 #include "ui_selectdialog.h"
 #include "dataentrydialog.h"
 #include "classentrydialog.h"
+#include "gradeentrydialog.h"
 
 selectDialog::selectDialog(QWidget *parent) :
     QDialog(parent),
@@ -29,5 +30,12 @@ void selectDialog::on_classDataButton_clicked()
 {
     this->close();
     classEntryDialog *dia = new classEntryDialog;
+    dia->show();
+}
+
+void selectDialog::on_gradeDataButton_clicked()
+{
+    this->close();
+    gradeEntryDialog *dia = new gradeEntryDialog;
     dia->show();
 }

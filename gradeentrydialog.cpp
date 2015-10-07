@@ -10,7 +10,7 @@ gradeEntryDialog::gradeEntryDialog(QWidget *parent) :
     this->setWindowTitle("录入学生课程分数");
     this->setMaximumSize(295,241);
     this->setMinimumSize(295,241);
-    ui->showIdLabel->setText(STU.id);
+    //ui->showIdLabel->setText(STU.id);
 }
 
 gradeEntryDialog::~gradeEntryDialog()
@@ -25,12 +25,34 @@ void gradeEntryDialog::on_gradeCancelButton_clicked()
 
 void gradeEntryDialog::on_gradeSubmitButton_clicked()
 {
-    QString classId, pingshi, shiyan, juanmian;
+    QString stuId, classId, pingshi, shiyan, juanmian;
+    stuId = ui->stuIdLineEdit->text();
     classId = ui->classIdLineEdit->text();
     pingshi = ui->pingshiLineEdit->text();
     shiyan = ui->shiyanLineEdit->text();
     juanmian = ui->juanmianLineEdit->text();
     bool flag = 0;
+
+    if (stuId == "") {
+        QMessageBox::warning(this, tr("录入失败"), tr("学生学号尚未填写"));
+        return;
+    }
+    if (classId == "") {
+        QMessageBox::warning(this, tr("录入失败"), tr("课程编号尚未填写"));
+        return;
+    }
+    if (pingshi == "") {
+        QMessageBox::warning(this, tr("录入失败"), tr("平时成绩尚未填写"));
+        return;
+    }
+    if (shiyan == "") {
+        QMessageBox::warning(this, tr("录入失败"), tr("实验成绩尚未填写"));
+        return;
+    }
+    if (juanmian == "") {
+        QMessageBox::warning(this, tr("录入失败"), tr("卷面成绩尚未填写"));
+        return;
+    }
 
     QSqlQuery query("SELECT id FROM class");
     while(query.next()) {
@@ -41,6 +63,7 @@ void gradeEntryDialog::on_gradeSubmitButton_clicked()
     }
 
     if(!flag) {
+        this->close();
         QMessageBox::warning(this, tr("无该编号课程"), tr("请前往课程信息录入项录入该课程信息"));
         return;
     }
@@ -70,7 +93,7 @@ void gradeEntryDialog::on_gradeSubmitButton_clicked()
         //qDebug() << xuefen;
 
         query.prepare("INSERT INTO `studentmanagement`.`grades` (`stuId`,`classId`,`pingshichengji`,`shiyanchengji`,`juanmianchengji`,`zonghechengji`,`shidexuefen`) VALUES (:id,:id2,:p,:s,:j,:z,:x);");
-        query.bindValue(":id", STU.id);
+        query.bindValue(":id", stuId);
         query.bindValue(":id2", classId);
         query.bindValue(":p", pingshi.toDouble());
         query.bindValue(":s", shiyan.toDouble());

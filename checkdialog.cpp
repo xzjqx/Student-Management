@@ -48,6 +48,10 @@ void checkDialog::on_dialogCheckButton_clicked()
             STU.room[i][3] = query.value(3).toString();
             i++;
         }
+        if(i == 0) {
+            QMessageBox::warning(this, tr("查询失败"), tr("没有该宿舍信息"));
+            return;
+        }
         this->close();
         showRoomDialog *dia = new showRoomDialog;
         dia->show();
@@ -66,6 +70,10 @@ void checkDialog::on_dialogCheckButton_clicked()
             STU.s[2] = query.value(2).toString();
             STU.s[3] = query.value(3).toString();
             i++;
+        }
+        if(i == 0) {
+            QMessageBox::warning(this, tr("查询失败"), tr("没有该学生信息"));
+            return;
         }
         this->close();
         showStuDialog *dia = new showStuDialog;

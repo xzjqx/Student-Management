@@ -20,6 +20,8 @@ private slots:
 
     void on_classDataButton_clicked();
 
+    void on_gradeDataButton_clicked();
+
 private:
     Ui::selectDialog *ui;
 };
