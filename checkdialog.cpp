@@ -37,7 +37,7 @@ void checkDialog::on_dialogCheckButton_clicked()
 
     if(stuRoom != "") {
         QSqlQuery query;
-        query.prepare("SELECT * FROM student where stuRoom = :room");
+        query.prepare("SELECT * FROM student where stuRoom = :room ORDER BY stuId");
         query.bindValue(":room", stuRoom);
         query.exec();
         int i = 0;

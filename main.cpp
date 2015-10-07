@@ -20,9 +20,9 @@ int main(int argc, char *argv[])
 
     StudentManagement w;
     splash->showMessage(QObject::tr("Loading modules..."),topRight,Qt::yellow);
-    for(int i = 0; i < 400000000; i++);
+    for(int i = 0; i < 300000000; i++);
     splash->showMessage(QObject::tr("Establishing connections..."),topRight,Qt::green);
-    for(int i = 0; i < 400000000; i++);
+    for(int i = 0; i < 300000000; i++);
 
     splash->finish(&w);
     delete splash;

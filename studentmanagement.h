@@ -36,6 +36,10 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_deleteButton_clicked();
+
+    void on_sortButton_clicked();
+
 private:
     Ui::StudentManagement *ui;
 

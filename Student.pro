@@ -22,7 +22,9 @@ SOURCES += main.cpp\
     selectdialog.cpp \
     gradeentrydialog.cpp \
     showroomdialog.cpp \
-    showstudialog.cpp
+    showstudialog.cpp \
+    deletedialog.cpp \
+    sortdialog.cpp
 
 HEADERS  += studentmanagement.h \
     data_entry.h \
@@ -35,7 +37,9 @@ HEADERS  += studentmanagement.h \
     selectdialog.h \
     gradeentrydialog.h \
     showroomdialog.h \
-    showstudialog.h
+    showstudialog.h \
+    deletedialog.h \
+    sortdialog.h
 
 FORMS    += studentmanagement.ui \
     dataentrydialog.ui \
@@ -46,7 +50,9 @@ FORMS    += studentmanagement.ui \
     selectdialog.ui \
     gradeentrydialog.ui \
     showroomdialog.ui \
-    showstudialog.ui
+    showstudialog.ui \
+    deletedialog.ui \
+    sortdialog.ui
 
 QT += sql
 QT += widgets

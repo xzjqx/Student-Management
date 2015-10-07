@@ -93,7 +93,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QPushButton" name="pushButton">
+           <widget class="QPushButton" name="sortButton">
             <property name="text">
              <string>排序</string>
             </property>

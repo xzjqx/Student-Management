@@ -1,6 +1,8 @@
 #include "studentmanagement.h"
 #include "ui_studentmanagement.h"
 #include "selectdialog.h"
+#include "deletedialog.h"
+#include "sortdialog.h"
 #include <QSplashScreen>
 #include <QPixmap>
 
@@ -14,8 +16,7 @@ StudentManagement::StudentManagement(QWidget *parent) :
     ui->infoTableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->infoTableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    QSqlQuery query("SELECT * FROM student");
-    query.exec("SELECT * FROM student");
+    QSqlQuery query("SELECT * FROM student ORDER BY stuId");
     STU.index = 0;
 
     while( query.next() ) {
@@ -44,7 +45,7 @@ void StudentManagement::on_checkButton_clicked()
 void StudentManagement::on_pushButton_2_clicked()
 {
     STU.index = 0;
-    QSqlQuery que("SELECT * FROM student");
+    QSqlQuery que("SELECT * FROM student ORDER BY stuId");
     while( que.next() ) {
         ui->infoTableWidget->setRowCount(STU.index + 1);
         ui->infoTableWidget->setItem(STU.index, 0, new QTableWidgetItem(que.value(0).toString()));
@@ -58,5 +59,17 @@ void StudentManagement::on_pushButton_2_clicked()
 void StudentManagement::on_dataButton_clicked()
 {
     selectDialog *dia = new selectDialog;
+    dia->show();
+}
+
+void StudentManagement::on_deleteButton_clicked()
+{
+    deleteDialog *dia = new deleteDialog;
+    dia->show();
+}
+
+void StudentManagement::on_sortButton_clicked()
+{
+    sortDialog *dia = new sortDialog;
     dia->show();
 }
