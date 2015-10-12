@@ -8,6 +8,7 @@ showStuDialog::showStuDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("显示该生基本信息");
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     ui->stuIdLabel->setText(STU.s[0]);
     ui->stuNameLabel->setText(STU.s[1]);

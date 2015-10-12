@@ -56,3 +56,9 @@ FORMS    += studentmanagement.ui \
 
 QT += sql
 QT += widgets
+
+RESOURCES += \
+    resources.qrc
+
+
+

@@ -7,6 +7,7 @@ deleteDialog::deleteDialog(QWidget *parent) :
     ui(new Ui::deleteDialog)
 {
     ui->setupUi(this);
+    this->setWindowTitle("删除学生信息");
 }
 
 deleteDialog::~deleteDialog()
@@ -21,6 +22,14 @@ void deleteDialog::on_submitButton_clicked()
     stuName = ui->stuNameLineEdit->text();
 
     QSqlQuery query;
+    query.prepare("SELECT * FROM student WHERE stuId = :i");
+    query.bindValue(":i", stuId);
+    query.exec();
+    if(!query.next()) {
+        QMessageBox::warning(this, tr("删除失败"), tr("未找到该学生信息"));
+        return;
+    }
+
     query.prepare("DELETE FROM student WHERE stuId = :i && stuName = :n");
     query.bindValue(":i", stuId);
     query.bindValue(":n", stuName);

@@ -1,8 +1,10 @@
+#include "stu.h"
 #include "studentmanagement.h"
 #include "ui_studentmanagement.h"
 #include "selectdialog.h"
 #include "deletedialog.h"
 #include "sortdialog.h"
+#include "showstudialog.h"
 #include <QSplashScreen>
 #include <QPixmap>
 
@@ -71,5 +73,16 @@ void StudentManagement::on_deleteButton_clicked()
 void StudentManagement::on_sortButton_clicked()
 {
     sortDialog *dia = new sortDialog;
+    dia->show();
+}
+
+void StudentManagement::on_infoTableWidget_cellDoubleClicked(int row, int column)
+{
+    STU.s[0] = ui->infoTableWidget->item(row, 0)->text();
+    STU.s[1] = ui->infoTableWidget->item(row, 1)->text();
+    STU.s[2] = ui->infoTableWidget->item(row, 2)->text();
+    STU.s[3] = ui->infoTableWidget->item(row, 3)->text();
+
+    showStuDialog *dia = new showStuDialog;
     dia->show();
 }

@@ -1,6 +1,7 @@
 #include "stu.h"
 #include "showroomdialog.h"
 #include "ui_showroomdialog.h"
+#include "showstudialog.h"
 
 showRoomDialog::showRoomDialog(QWidget *parent) :
     QDialog(parent),
@@ -8,6 +9,7 @@ showRoomDialog::showRoomDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("显示该宿舍学生基本信息");
+    ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     //qDebug() << STU.room[0][0];
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
@@ -25,4 +27,15 @@ showRoomDialog::showRoomDialog(QWidget *parent) :
 showRoomDialog::~showRoomDialog()
 {
     delete ui;
+}
+
+void showRoomDialog::on_tableWidget_cellDoubleClicked(int row, int column)
+{
+    STU.s[0] = ui->tableWidget->item(row, 0)->text();
+    STU.s[1] = ui->tableWidget->item(row, 1)->text();
+    STU.s[3] = ui->tableWidget->item(row, 2)->text();
+    STU.s[2] = STU.room[0][2];
+
+    showStuDialog *dia = new showStuDialog;
+    dia->show();
 }

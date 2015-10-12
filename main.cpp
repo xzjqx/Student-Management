@@ -9,11 +9,10 @@ STU_CLASS STU;
 int main(int argc, char *argv[])
 {
     STU.init_database();
-    //qDebug() << STU.isConnect;
     QApplication a(argc, argv);
 
     QSplashScreen *splash = new QSplashScreen;
-    splash->setPixmap(QPixmap("D:/Software practice/Student/233.jpg"));
+    splash->setPixmap(QPixmap(":/new/prefix1/233.jpg"));
     splash->show();
     Qt::Alignment topRight = Qt::AlignRight | Qt::AlignTop;
     splash->showMessage(QObject::tr("Loading into the main window..."),topRight,Qt::red);

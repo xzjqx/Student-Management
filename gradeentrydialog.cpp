@@ -11,6 +11,15 @@ gradeEntryDialog::gradeEntryDialog(QWidget *parent) :
     this->setMaximumSize(295,241);
     this->setMinimumSize(295,241);
     //ui->showIdLabel->setText(STU.id);
+
+    QStringList strings;
+    QSqlQuery query("SELECT id FROM class ORDER BY id");
+    while(query.next()) {
+        QString str = query.value(0).toString();
+        strings.append(str);
+    }
+    ui->classIdComboBox->clear();
+    ui->classIdComboBox->addItems(strings);
 }
 
 gradeEntryDialog::~gradeEntryDialog()
@@ -27,20 +36,19 @@ void gradeEntryDialog::on_gradeSubmitButton_clicked()
 {
     QString stuId, classId, pingshi, shiyan, juanmian;
     stuId = ui->stuIdLineEdit->text();
-    classId = ui->classIdLineEdit->text();
+    classId = ui->classIdComboBox->currentText();
     pingshi = ui->pingshiLineEdit->text();
     shiyan = ui->shiyanLineEdit->text();
     juanmian = ui->juanmianLineEdit->text();
-    bool flag = 0;
 
     if (stuId == "") {
         QMessageBox::warning(this, tr("录入失败"), tr("学生学号尚未填写"));
         return;
     }
-    if (classId == "") {
+    /*if (classId == "") {
         QMessageBox::warning(this, tr("录入失败"), tr("课程编号尚未填写"));
         return;
-    }
+    }*/
     if (pingshi == "") {
         QMessageBox::warning(this, tr("录入失败"), tr("平时成绩尚未填写"));
         return;
@@ -54,54 +62,42 @@ void gradeEntryDialog::on_gradeSubmitButton_clicked()
         return;
     }
 
-    QSqlQuery query("SELECT id FROM class");
-    while(query.next()) {
-        if(classId == query.value(0).toString()) {
-            flag = 1;
-            break;
-        }
-    }
+    QSqlQuery query;
+    double zonghe = 0, xuefen;
+    QString Szonghe, Sxuefen;
+    query.prepare("SELECT * FROM class where id = :i");
+    query.bindValue(":i", classId);
+    query.exec();
+    query.next();
+    xuefen = query.value(2).toDouble();
 
-    if(!flag) {
-        this->close();
-        QMessageBox::warning(this, tr("无该编号课程"), tr("请前往课程信息录入项录入该课程信息"));
-        return;
-    }
-    else {
-        double zonghe = 0, xuefen;
-        query.prepare("SELECT * FROM class where id = :i");
-        query.bindValue(":i", classId);
-        query.exec();
-        //qDebug() << xuefen;
-        query.next();
-        xuefen = query.value(2).toDouble();
-        //qDebug() << xuefen;
-        if( shiyan.toDouble() == -1 )
-            zonghe = pingshi.toDouble()*0.3 + juanmian.toDouble()*0.7;
-        else
-            zonghe = pingshi.toDouble()*0.15 + shiyan.toDouble()*0.15 + juanmian.toDouble()*0.7;
-        if(zonghe >= 90)
-            xuefen = 1.0*xuefen;
-        else if(zonghe >= 80)
-            xuefen *= 0.8;
-        else if(zonghe >= 70)
-            xuefen *= 0.75;
-        else if(zonghe >= 60)
-            xuefen *= 0.6;
-        else
-            xuefen = 0;
-        //qDebug() << xuefen;
+    if( shiyan.toDouble() == -1 )
+        zonghe = pingshi.toDouble()*0.3 + juanmian.toDouble()*0.7;
+    else
+        zonghe = pingshi.toDouble()*0.15 + shiyan.toDouble()*0.15 + juanmian.toDouble()*0.7;
+    if(zonghe >= 90)
+        xuefen = 1.0*xuefen;
+    else if(zonghe >= 80)
+        xuefen *= 0.8;
+    else if(zonghe >= 70)
+        xuefen *= 0.75;
+    else if(zonghe >= 60)
+        xuefen *= 0.6;
+    else
+        xuefen = 0;
+    Szonghe = QString::number(zonghe, 'f', 1);
+    Sxuefen = QString::number(xuefen, 'f', 1);
 
-        query.prepare("INSERT INTO `studentmanagement`.`grades` (`stuId`,`classId`,`pingshichengji`,`shiyanchengji`,`juanmianchengji`,`zonghechengji`,`shidexuefen`) VALUES (:id,:id2,:p,:s,:j,:z,:x);");
-        query.bindValue(":id", stuId);
-        query.bindValue(":id2", classId);
-        query.bindValue(":p", pingshi.toDouble());
-        query.bindValue(":s", shiyan.toDouble());
-        query.bindValue(":j", juanmian.toDouble());
-        query.bindValue(":z", zonghe);
-        query.bindValue(":x", xuefen);
-        query.exec();
-        this->close();
-        QMessageBox::warning(this, tr("录入成功"), tr("该生成绩已录入后台数据库"));
-    }
+    query.prepare("INSERT INTO `studentmanagement`.`grades` (`stuId`,`classId`,`pingshichengji`,`shiyanchengji`,`juanmianchengji`,`zonghechengji`,`shidexuefen`) VALUES (:id,:id2,:p,:s,:j,:z,:x);");
+    query.bindValue(":id", stuId);
+    query.bindValue(":id2", classId);
+    query.bindValue(":p", pingshi);
+    query.bindValue(":s", shiyan);
+    query.bindValue(":j", juanmian);
+    query.bindValue(":z", Szonghe);
+    query.bindValue(":x", Sxuefen);
+    query.exec();
+    this->close();
+    QMessageBox::warning(this, tr("录入成功"), tr("该生成绩已录入后台数据库"));
+
 }

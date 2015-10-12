@@ -37,7 +37,7 @@ void adminLoginDialog::on_loginButton_clicked() {
 
     QSqlQuery query("SELECT account, password FROM admin");
     if(!STU.isConnect) {
-        STU.isLogin = 1;
+        STU.isLogin = 0;
         QMessageBox::information(this, tr("登录失败"), tr("未连接上数据库"));
         this->close();
     }

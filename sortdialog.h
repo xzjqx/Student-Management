@@ -15,6 +15,15 @@ public:
     explicit sortDialog(QWidget *parent = 0);
     ~sortDialog();
 
+private slots:
+    void on_zongheSButton_clicked();
+
+    void on_zongheJButton_clicked();
+
+    void on_xuefenSButton_clicked();
+
+    void on_xuefenJButton_clicked();
+
 private:
     Ui::sortDialog *ui;
 };

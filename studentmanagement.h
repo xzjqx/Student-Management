@@ -32,13 +32,15 @@ public:
 private slots:
     void on_dataButton_clicked();
     void on_checkButton_clicked();
-    //void on_signal_login_status();
 
     void on_pushButton_2_clicked();
 
     void on_deleteButton_clicked();
 
     void on_sortButton_clicked();
+
+
+    void on_infoTableWidget_cellDoubleClicked(int row, int column);
 
 private:
     Ui::StudentManagement *ui;
