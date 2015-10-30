@@ -18,20 +18,21 @@ dataEntryDialog::~dataEntryDialog()
     delete ui;
 }
 
-
+//点击取消按键的槽函数
 void dataEntryDialog::on_dataCancelButton_clicked()
 {
     this->close();
 }
 
+//点击确定按键的槽函数
 void dataEntryDialog::on_dataSubmitButton_clicked()
 {
-    //STU.isDataCancel = 0;
     QString dataId, dataName, dataRoom, dataSex;
     dataId = ui->dataIdLineEdit->text();
     dataName = ui->dataNameLineEdit->text();
     dataRoom = ui->dataRoomLineEdit->text();
     dataSex = ui->dataSexLineEdit->text();
+    //记录填入数据
     int haveStuInfo = 0;
     int index = 0;
     STU.id = dataId;
@@ -52,12 +53,13 @@ void dataEntryDialog::on_dataSubmitButton_clicked()
         QMessageBox::warning(this, tr("录入失败"), tr("学生性别尚未填写"));
         return;
     }
+    //若某些信息没有填入，则提示错误信息
 
-    QSqlQuery query("SELECT * FROM student");
+    QSqlQuery query("SELECT * FROM student");//SQL查询语句
     while( query.next() ) {
         if(dataId == query.value(0).toString()) {
             STU.id = query.value(0).toString();
-            haveStuInfo = 1;
+            haveStuInfo = 1;//若查到填入的学生学号，则记录下来
             break;
         }
         index ++;
@@ -69,15 +71,16 @@ void dataEntryDialog::on_dataSubmitButton_clicked()
         query.bindValue(":room", dataRoom);
         query.bindValue(":sex", dataSex);
         query.exec();
+        //SQL插入语句
         this->close();
         QMessageBox::warning(this, tr("录入成功"), tr("该生信息已在后台数据库中"));
-    }
+    }//若未在数据库中查到新填写的学生，则插入新学生信息
     else {
         ui->dataIdLineEdit->setText("");
         ui->dataNameLineEdit->setText("");
         ui->dataRoomLineEdit->setText("");
         ui->dataSexLineEdit->setText("");
         QMessageBox::warning(this, tr("录入失败"), tr("数据库中已有该学生信息，无需再次录入"));
-    }
+    }//否则提示错误信息并重新输入
 
 }

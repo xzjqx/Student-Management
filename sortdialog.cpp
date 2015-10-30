@@ -8,6 +8,7 @@ sortDialog::sortDialog(QWidget *parent) :
 {
     ui->setupUi(this);
     this->setWindowTitle("学生课程排序");
+    //设置窗口标题
 }
 
 sortDialog::~sortDialog()
@@ -15,12 +16,13 @@ sortDialog::~sortDialog()
     delete ui;
 }
 
-
+//点击按综合成绩升序的槽函数
 void sortDialog::on_zongheSButton_clicked()
 {
     QString id, name;
     id = ui->stuIdLineEdit->text();
     name = ui->stuNameLineEdit->text();
+    //记录填入学生信息
 
     if( id == "" ){
         QMessageBox::warning(this, tr("无法排序"), tr("未输入学号"));
@@ -30,11 +32,13 @@ void sortDialog::on_zongheSButton_clicked()
         QMessageBox::warning(this, tr("无法排序"), tr("未输入姓名"));
         return;
     }
+    //若某些信息没有填入，则提示错误信息
 
     QSqlQuery query;
     query.prepare("SELECT * FROM grades WHERE stuId = :i ORDER BY zonghechengji");
     query.bindValue(":i", id);
     query.exec();
+    //SQL查询排序语句，在查询的过程中按要求排序
     int i = 0;
     while(query.next()) {
         //qDebug() << i;
@@ -54,6 +58,7 @@ void sortDialog::on_zongheJButton_clicked()
     QString id, name;
     id = ui->stuIdLineEdit->text();
     name = ui->stuNameLineEdit->text();
+    //记录填入学生信息
 
     if( id == "" ){
         QMessageBox::warning(this, tr("无法排序"), tr("未输入学号"));
@@ -63,11 +68,13 @@ void sortDialog::on_zongheJButton_clicked()
         QMessageBox::warning(this, tr("无法排序"), tr("未输入姓名"));
         return;
     }
+    //若某些信息没有填入，则提示错误信息
 
     QSqlQuery query;
     query.prepare("SELECT * FROM grades WHERE stuId = :i ORDER BY zonghechengji DESC");
     query.bindValue(":i", id);
     query.exec();
+    //SQL查询排序语句，在查询的过程中按要求排序
     int i = 0;
     while(query.next()) {
         //qDebug() << i;
@@ -87,6 +94,7 @@ void sortDialog::on_xuefenSButton_clicked()
     QString id, name;
     id = ui->stuIdLineEdit->text();
     name = ui->stuNameLineEdit->text();
+    //记录填入学生信息
 
     if( id == "" ){
         QMessageBox::warning(this, tr("无法排序"), tr("未输入学号"));
@@ -96,11 +104,13 @@ void sortDialog::on_xuefenSButton_clicked()
         QMessageBox::warning(this, tr("无法排序"), tr("未输入姓名"));
         return;
     }
+    //若某些信息没有填入，则提示错误信息
 
     QSqlQuery query;
     query.prepare("SELECT * FROM grades WHERE stuId = :i ORDER BY shidexuefen");
     query.bindValue(":i", id);
     query.exec();
+    //SQL查询排序语句，在查询的过程中按要求排序
     int i = 0;
     while(query.next()) {
         //qDebug() << i;
@@ -120,6 +130,7 @@ void sortDialog::on_xuefenJButton_clicked()
     QString id, name;
     id = ui->stuIdLineEdit->text();
     name = ui->stuNameLineEdit->text();
+    //记录填入学生信息
 
     if( id == "" ){
         QMessageBox::warning(this, tr("无法排序"), tr("未输入学号"));
@@ -129,11 +140,13 @@ void sortDialog::on_xuefenJButton_clicked()
         QMessageBox::warning(this, tr("无法排序"), tr("未输入姓名"));
         return;
     }
+    //若某些信息没有填入，则提示错误信息
 
     QSqlQuery query;
     query.prepare("SELECT * FROM grades WHERE stuId = :i ORDER BY shidexuefen DESC");
     query.bindValue(":i", id);
     query.exec();
+    //SQL查询排序语句，在查询的过程中按要求排序
     int i = 0;
     while(query.next()) {
         //qDebug() << i;

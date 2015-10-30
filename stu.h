@@ -20,6 +20,7 @@ public:
     QString s[4];
 
     void init_database();
+    bool isAdminLogin();
 
 };
 

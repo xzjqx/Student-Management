@@ -138,21 +138,5 @@
     </hint>
    </hints>
   </connection>
-  <connection>
-   <sender>cancelButton</sender>
-   <signal>clicked()</signal>
-   <receiver>adminLoginDialog</receiver>
-   <slot>exec()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>192</x>
-     <y>120</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>264</x>
-     <y>98</y>
-    </hint>
-   </hints>
-  </connection>
  </connections>
 </ui>
